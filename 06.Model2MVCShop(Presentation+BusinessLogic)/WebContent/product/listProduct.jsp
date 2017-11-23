@@ -1,3 +1,4 @@
+<%@page import="com.model2.mvc.common.Search"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
@@ -22,7 +23,7 @@
 <body bgcolor="#ffffff" text="#000000">
 
 	<div style="width: 98%; margin-left: 10px;">
-
+	<%System.out.println("list.jsp의 order : "+((Search)request.getAttribute("search")).getOrder()); %>
 		<form name="detailForm" action="/listProduct.do?menu=${param.menu}&order=${search.order}"
 			method="post">
 
@@ -118,11 +119,11 @@
 						
 						&nbsp;&nbsp;
 						<select name="pageSize" class="ct_input_g" style="width: 80px">
-							<option value="3" ${param.pageSize == 3? 'selected':''}>3개씩 보기</option>
-							<option value="5" ${param.pageSize==5? 'selected':''}>5개씩 보기</option>
-							<option value="10" ${param.pageSize==10? 'selected':''}>10개씩 보기</option>
-							<option value="15" ${param.pageSize==15? 'selected':''}>15개씩 보기</option>
-							<option value="20" ${param.pageSize==20? 'selected':''}>20개씩 보기</option>
+							<option value="3" ${search.pageSize == 3? 'selected':''}>3개씩 보기</option>
+							<option value="5" ${search.pageSize==5? 'selected':''}>5개씩 보기</option>
+							<option value="10" ${search.pageSize==10? 'selected':''}>10개씩 보기</option>
+							<option value="15" ${search.pageSize==15? 'selected':''}>15개씩 보기</option>
+							<option value="20" ${search.pageSize==20? 'selected':''}>20개씩 보기</option>
 						</select>
 							<table border="0" cellspacing="0" cellpadding="0">
 							<tr>
