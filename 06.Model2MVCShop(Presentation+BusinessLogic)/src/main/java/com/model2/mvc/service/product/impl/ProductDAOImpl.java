@@ -31,12 +31,15 @@ public class ProductDAOImpl implements ProductDAO {
 	}
 	
 	public Product findProdrct(int prodNo) throws SQLException {
-		return sqlSession.selectOne("ProductMapper.getProduct", prodNo);
+		Product product = sqlSession.selectOne("ProductMapper.getProduct", prodNo);
+		return product;
 	}
 
 	
 	public List<Product> getProductList(Search search) throws Exception {
-		return sqlSession.selectList("ProductMapper.getProductList", search);
+		List<Product> list = sqlSession.selectList("ProductMapper.getProductList", search);
+		System.out.println("dao : "+list);
+		return list;
 	}
 
 	

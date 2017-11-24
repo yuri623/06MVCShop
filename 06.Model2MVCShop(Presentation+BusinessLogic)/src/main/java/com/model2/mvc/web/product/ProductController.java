@@ -58,19 +58,6 @@ public class ProductController {
 		if(menu.equals("manage")) {
 			return "forward:/updateProductView.do?prodNo="+prodNo;
 		}else {
-			Cookie[] cookies = request.getCookies();
-			String values="";
-			System.out.println("length : "+cookies.length);
-			for(int i = 1; i < cookies.length ; i++) {
-				values = cookies[i].getValue();
-				if(i<cookies.length) {
-					values+=",";
-				}
-			}
-			values += prodNo;
-			System.out.println(values);
-			Cookie cookie = new Cookie("history", values);
-			response.addCookie(cookie);
 			return "forward:/product/getProduct.jsp";
 		}
 	}
@@ -101,15 +88,16 @@ public class ProductController {
 		
 		// Model 과 View 연결
 		request.setAttribute("list", map.get("list"));
+		System.out.println("map :"+map.get("list"));
 		request.setAttribute("resultPage", resultPage);
 		request.setAttribute("search", search);
 		return "forward:/product/listProduct.jsp";
 	}
 	
 	@RequestMapping("/updateProductView.do")
-	public String updateProductView(@RequestParam("prodNo") int prodNo) throws Exception{
+	public String updateProductView(@RequestParam("prodNo") String prodNo) throws Exception{
 		System.out.println("/updateProductView.do 입니다.");
-		productService.getProduct(prodNo);
+		productService.getProduct(Integer.parseInt(prodNo));
 		
 		return "forward:/product/updateProductView.jsp";
 	}
