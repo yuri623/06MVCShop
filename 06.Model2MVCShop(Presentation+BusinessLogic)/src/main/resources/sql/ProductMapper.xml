@@ -58,7 +58,7 @@
 											p.prod_no
 										</if>
 										<if test="order != null">
-											#{order}
+											${order}
 										</if>
 										) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
