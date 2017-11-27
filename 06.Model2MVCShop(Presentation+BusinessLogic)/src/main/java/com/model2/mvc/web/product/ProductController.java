@@ -63,7 +63,9 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/listProduct.do")
-	public String listProduct(@ModelAttribute("Search") Search search, HttpServletRequest request) throws Exception{
+	public String listProduct(@ModelAttribute("Search") Search search,
+								@RequestParam("pageSize") int pageSize,
+								HttpServletRequest request) throws Exception{
 
 		System.out.println("/listProduct.do ¿‘¥œ¥Ÿ.");
 		
