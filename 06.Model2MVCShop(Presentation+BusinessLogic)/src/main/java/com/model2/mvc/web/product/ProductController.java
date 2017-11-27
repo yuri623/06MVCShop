@@ -63,7 +63,8 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/listProduct.do")
-	public String listProduct(@ModelAttribute("Search") Search search, HttpServletRequest request) throws Exception{
+	public String listProduct(@ModelAttribute("search") Search search,
+								HttpServletRequest request) throws Exception{
 
 		System.out.println("/listProduct.do 입니다.");
 		
@@ -71,8 +72,12 @@ public class ProductController {
 			search.setCurrentPage(1);
 		}
 		
+		System.out.println("pagesize : "+pageSize);
+		
 		if(search.getPageSize() == 0) {
-		search.setPageSize(pageSize);
+			search.setPageSize(pageSize);
+		}else {
+			pageSize = search.getPageSize();
 		}
 		
 		System.out.println("order : "+search.getOrder());
@@ -83,12 +88,12 @@ public class ProductController {
 		// Business logic 수행
 		Map<String , Object> map=productService.getProductList(search);
 		
+		pageUnit = (((Integer)map.get("totalCount")).intValue()%pageSize)+1;
+		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
 		
 		// Model 과 View 연결
 		request.setAttribute("list", map.get("list"));
-		System.out.println("map :"+map.get("list"));
 		request.setAttribute("resultPage", resultPage);
 		request.setAttribute("search", search);
 		return "forward:/product/listProduct.jsp";
