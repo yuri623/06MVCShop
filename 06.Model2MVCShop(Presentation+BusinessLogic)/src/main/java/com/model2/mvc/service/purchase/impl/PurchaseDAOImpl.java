@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +21,10 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
 	SqlSession sqlSession;
+	
+	public PurchaseDAOImpl() {
+		System.out.println("PurchaseDAOImpl default Contructor");
+	}
 
 	public Purchase findPurchase(int tranNo) throws Exception {
 		return sqlSession.selectOne("PurchaseMapper.getPurchaseByTranNo", tranNo);

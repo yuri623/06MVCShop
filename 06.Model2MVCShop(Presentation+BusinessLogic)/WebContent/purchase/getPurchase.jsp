@@ -33,7 +33,6 @@
 		</td>
 	</tr>
 </table>
-
 <table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top: 13px;">
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -47,7 +46,7 @@
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="105">
-					${purchase.tranNo}</td>
+					${purchase.purchaseProd.prodNo}</td>
 					<td></td>
 				</tr>
 			</table>
@@ -154,7 +153,7 @@
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
-						<a href="javascript:history.go(-1);">확인</a>
+						<a href="/listPurchase.do">확인</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif"width="14" height="23"/>

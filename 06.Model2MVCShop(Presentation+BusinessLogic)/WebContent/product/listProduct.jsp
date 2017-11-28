@@ -164,7 +164,7 @@
 								${i.prodName}
 							</c:if> 
 							<c:if test="${param.menu != 'search' || empty i.proTranCode }">
-								<a href="/getProduct.do?prodNo=${i.prodNo}&amp;menu=${param.menu}">${i.prodName}</a></td>
+								<a href="/getProduct.do?prodNo=${i.prodNo}&menu=${param.menu}">${i.prodName}</a></td>
 							</c:if>
 						<td></td>
 						<td align="left">${i.price}</td>

@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -50,13 +51,12 @@ public class ProductController {
 	@RequestMapping("/getProduct.do")
 	public String getProduct(@RequestParam("prodNo") int prodNo,
 							 @RequestParam("menu") String menu,
-							 HttpServletRequest request,
-							 HttpServletResponse response) throws Exception{
+							 Model model) throws Exception{
 		System.out.println("/getProduct.do 입니다.");
-		productService.getProduct(prodNo);
-
+		model.addAttribute("product",productService.getProduct(prodNo));
+		
 		if(menu.equals("manage")) {
-			return "forward:/updateProductView.do?prodNo="+prodNo;
+			return "forward:/updateProductView.do";
 		}else {
 			return "forward:/product/getProduct.jsp";
 		}
@@ -100,9 +100,9 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/updateProductView.do")
-	public String updateProductView(@RequestParam("prodNo") String prodNo) throws Exception{
+	public String updateProductView(@RequestParam("prodNo") int prodNo) throws Exception{
 		System.out.println("/updateProductView.do 입니다.");
-		productService.getProduct(Integer.parseInt(prodNo));
+		productService.getProduct(prodNo);
 		
 		return "forward:/product/updateProductView.jsp";
 	}
@@ -110,6 +110,8 @@ public class ProductController {
 	@RequestMapping("/updateProduct.do")
 	public String updateProduct(@ModelAttribute("product") Product product) throws Exception{
 		System.out.println("/updateProduct.do 입니다.");
+		System.out.println("%%product ; "+product);
+		
 		productService.updateProduct(product);
 		
 		return "forward:/product/getProduct.jsp";

@@ -38,6 +38,10 @@ public class PurchaseController {
 	int pageUnit;
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
+	
+	public PurchaseController() {
+		System.out.println(this.getClass());
+	}
 
 	public PurchaseService getPurchaseService() throws Exception {
 		return purchaseService;
@@ -48,45 +52,43 @@ public class PurchaseController {
 	}
 	
 	@RequestMapping("/addPurchaseView.do")
-	public String addPurchaseView(@ModelAttribute("purchase") Purchase purchase,
-									HttpSession session) throws Exception {
-		int prodNo = purchase.getPurchaseProd().getProdNo();
-		Product product = productService.getProduct(prodNo);
-		
-		User user = (User)session.getAttribute("user");
-		
-		purchase.setBuyer(user);
-		purchase.setPurchaseProd(product);
+	public String addPurchaseView(@RequestParam("prodNo") int prodNo,
+									Model model) throws Exception {
+
+		Product product = productService.getProduct(prodNo);	
+		model.addAttribute("product", product);
 		
 		return "forward:/purchase/addPurchaseView.jsp";
 	}
 	
 	@RequestMapping("/addPurchase.do")
-	public String addPurchase(@ModelAttribute("purchase") Purchase purchase) throws Exception {
+	public String addPurchase(@ModelAttribute("purchase") Purchase purchase,
+								@RequestParam("prodNo") int prodNo,
+								HttpSession session) throws Exception {
 		
-		Product product = productService.getProduct(purchase.getPurchaseProd().getProdNo());
-		User user = userService.getUser(purchase.getBuyer().getUserId());
+		Product product = productService.getProduct(prodNo);
+		User user = (User)session.getAttribute("user");
 		
 		purchase.setPurchaseProd(product);
 		purchase.setBuyer(user);
 		
 		purchaseService.addPurchase(purchase);
-
+		
 		return "forward:/purchase/addPurchase.jsp";
 	}
 	
 	@RequestMapping("/getPurchase.do")
-	public String getPurchase(@ModelAttribute("purchase") Purchase purchase) throws Exception {
+	public String getPurchase(@RequestParam("tranNo") int tranNo,
+								Model model) throws Exception {
 		
-		int tranNo = purchase.getTranNo();
-		
-		purchase = purchaseService.getPurchase(tranNo);
+		model.addAttribute(purchaseService.getPurchase(tranNo));
 		
 		return "forward:/purchase/getPurchase.jsp";
 	}
 	
 	@RequestMapping("/listPurchase.do")
 	public String listPurchase(@ModelAttribute("search") Search search,
+								HttpSession session,
 								Model model) throws Exception {
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -101,7 +103,7 @@ public class PurchaseController {
 		}
 		
 		// Business logic ผ๖วเ
-		Map<String , Object> map=productService.getProductList(search);
+		Map<String , Object> map=purchaseService.getPurchaseList(search,((User)session.getAttribute("user")).getUserId());
 		
 		pageUnit = (((Integer)map.get("totalCount")).intValue()%pageSize)+1;
 		
@@ -115,26 +117,29 @@ public class PurchaseController {
 		return "forward:/purchase/listPurchase.jsp";
 	}
 	
-	@RequestMapping("/updatePurcahseView.do")
-	public String updatePurchaseView(@ModelAttribute("purchase") Purchase purchase) throws Exception {
-		purchaseService.getPurchase(purchase.getTranNo());
+	@RequestMapping("/updatePurchaseView.do")
+	public String updatePurchaseView(@RequestParam("tranNo") int tranNo,
+										Model	model) throws Exception {
+		model.addAttribute("purchase",purchaseService.getPurchase(tranNo));
 		
 		return "forward:/purchase/updatePurchaseView.jsp";
 	}
 	
+	@RequestMapping("/updatePurchase.do")
 	public String updatePurchase(@ModelAttribute("purchase") Purchase purchase) throws Exception {
 
+		purchase.setPurchaseProd(purchaseService.getPurchase(purchase.getTranNo()).getPurchaseProd());
+		purchase.setOrderDate(purchaseService.getPurchase(purchase.getTranNo()).getOrderDate());
+		System.out.println("**ppurchase ; "+purchase);
 		purchaseService.updatePurchase(purchase);
 
-		
-		return "forward:/purchase/getPurchase.jsp";
+		return "forward:/purchase/getPurchase.jsp?prodNo="+purchase.getPurchaseProd().getProdNo();
 	}
 	
 	@RequestMapping("/updateTranCode.do")
 	public String updateTranCode(@ModelAttribute("purchase") Purchase purchase,
+									@RequestParam("tranNo") int tranNo,
 									@RequestParam("tranCode") String tranCode) throws Exception {
-		int tranNo = purchase.getTranNo();
-		
 		purchase = purchaseService.getPurchase(tranNo);
 		purchase.setTranCode(tranCode);
 		purchaseService.updateTranCode(purchase);
@@ -144,9 +149,8 @@ public class PurchaseController {
 	
 	@RequestMapping("/updateTranCodeByProd.do")
 	public String updateTranCodeByProd(@ModelAttribute("purchase") Purchase purchase,
+										@RequestParam("prodNo") int prodNo,
 										@RequestParam("tranCode") String tranCode) throws Exception {
-		int prodNo = purchase.getPurchaseProd().getProdNo();
-		
 		purchase = purchaseService.getPurchase2(prodNo);
 		purchase.setTranCode(tranCode);
 		purchaseService.updateTranCode(purchase);

@@ -23,6 +23,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	private PurchaseDAO dao;
 	
 	public PurchaseServiceImpl() {
+		System.out.println("PurchaseServiceImpl default Constructor....");
 	}
 
 	@Override
