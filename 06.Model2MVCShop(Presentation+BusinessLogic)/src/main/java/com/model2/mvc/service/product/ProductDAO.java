@@ -14,7 +14,7 @@ import com.model2.mvc.service.domain.Product;
 
 public interface ProductDAO {
 	
-	public Product findProdrct(int prodNo) throws SQLException;
+	public Product findProduct(int prodNo) throws SQLException;
 	
 	public List<Product> getProductList(Search search) throws Exception;
 	

@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	public Product getProduct(int prodNo) throws Exception {
-		return dao.findProdrct(prodNo);
+		return dao.findProduct(prodNo);
 	}
 
 	public Map<String, Object> getProductList(Search search) throws Exception {

@@ -30,7 +30,7 @@ public class ProductDAOImpl implements ProductDAO {
 		this.sqlSession = sqlSession;
 	}
 	
-	public Product findProdrct(int prodNo) throws SQLException {
+	public Product findProduct(int prodNo) throws SQLException {
 		Product product = sqlSession.selectOne("ProductMapper.getProduct", prodNo);
 		return product;
 	}

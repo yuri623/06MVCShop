@@ -46,7 +46,7 @@ function resetData(){
 </script>
 </head>
 
-<form name="detailForm" method="post">
+<form name="detailForm" method="post" enctype="multipart/form-data">
 
 <table width="100%" height="37" border="0" cellspacing="0" cellpadding="0">
 	<tr>

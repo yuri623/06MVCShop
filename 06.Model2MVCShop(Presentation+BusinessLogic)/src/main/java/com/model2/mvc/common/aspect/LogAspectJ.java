@@ -4,7 +4,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 
 /*
  * FileName : PojoAspectJ.java
- *	:: XML 에 선언적으로 aspect 의 적용   
+ *	:: XML 에 선언적으로 aspect 의 적용     
   */
 public class LogAspectJ {
 
