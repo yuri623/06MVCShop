@@ -116,7 +116,7 @@
 						<img width="17" height="23" src="/images/ct_btnbg01.gif">
 					</td>
 					<td class="ct_btn01" background="/images/ct_btnbg02.gif" style="padding-top: 3px;">
-						<a href="/listProduct.do?menu=manage">확인</a>
+						<a href="/product/listProduct?menu=manage">확인</a>
 					</td>
 					<td width="14" height="23">
 						<img width="14" height="23" src="/images/ct_btnbg03.gif">

@@ -24,7 +24,7 @@
 
 	<div style="width: 98%; margin-left: 10px;">
 	<%System.out.println("list.jsp의 order : "+((Search)request.getAttribute("search")).getOrder()); %>
-		<form name="detailForm" action="/listProduct.do?menu=${param.menu}&order=${search.order}"
+		<form name="detailForm" action="/product/listProduct?menu=${param.menu}&order=${search.order}"
 			method="post">
 
 			<table width="100%" height="37" border="0" cellpadding="0"
@@ -113,9 +113,9 @@
 						${resultPage.currentPage} 페이지
 						</td>
 						<td colspan="4" align="right">
-						<a href="/listProduct.do?menu=${param.menu }&order=prod_name">상품명</a>
-						&nbsp;<a href="/listProduct.do?menu=${param.menu }&order=manufacture_day">신상품순</a>
-						&nbsp;<a href = "/listProduct.do?menu=${param.menu }&order=price">가격낮은순</a>
+						<a href="/product/listProduct?menu=${param.menu }&order=prod_name">상품명</a>
+						&nbsp;<a href="/product/listProduct?menu=${param.menu }&order=manufacture_day">신상품순</a>
+						&nbsp;<a href = "/product/listProduct?menu=${param.menu }&order=price">가격낮은순</a>
 						
 						&nbsp;&nbsp;
 						<select name="pageSize" class="ct_input_g" style="width: 80px">
@@ -164,7 +164,7 @@
 								${i.prodName}
 							</c:if> 
 							<c:if test="${param.menu != 'search' || empty i.proTranCode }">
-								<a href="/getProduct.do?prodNo=${i.prodNo}&menu=${param.menu}">${i.prodName}</a></td>
+								<a href="/product/getProduct?prodNo=${i.prodNo}&menu=${param.menu}">${i.prodName}</a></td>
 							</c:if>
 						<td></td>
 						<td align="left">${i.price}</td>
@@ -175,7 +175,7 @@
 							<c:if test="${user.role == 'admin' && !empty i.proTranCode}">
 								<c:if test="${i.proTranCode == '1  '}">구매완료
 									<c:if test="${param.menu == 'manage'}">
-										<a href="/updateTranCodeByProd.do?prodNo=${i.prodNo}&tranCode=2">배송하기</a>
+										<a href="/purchase/updateTranCodeByProd?prodNo=${i.prodNo}&tranCode=2">배송하기</a>
 									</c:if>
 							</c:if>
 							<c:if test="${i.proTranCode == '2  '}">
