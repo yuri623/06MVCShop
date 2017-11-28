@@ -23,6 +23,7 @@ import com.model2.mvc.service.purchase.PurchaseService;
 import com.model2.mvc.service.user.UserService;
 
 @Controller
+@RequestMapping("/purchase/*")
 public class PurchaseController {
 	
 	@Autowired
@@ -51,7 +52,7 @@ public class PurchaseController {
 		this.purchaseService = purchaseService;
 	}
 	
-	@RequestMapping("/addPurchaseView.do")
+	@RequestMapping("addPurchaseView")
 	public String addPurchaseView(@RequestParam("prodNo") int prodNo,
 									Model model) throws Exception {
 
@@ -61,7 +62,7 @@ public class PurchaseController {
 		return "forward:/purchase/addPurchaseView.jsp";
 	}
 	
-	@RequestMapping("/addPurchase.do")
+	@RequestMapping("addPurchase")
 	public String addPurchase(@ModelAttribute("purchase") Purchase purchase,
 								@RequestParam("prodNo") int prodNo,
 								HttpSession session) throws Exception {
@@ -77,7 +78,7 @@ public class PurchaseController {
 		return "forward:/purchase/addPurchase.jsp";
 	}
 	
-	@RequestMapping("/getPurchase.do")
+	@RequestMapping("getPurchase")
 	public String getPurchase(@RequestParam("tranNo") int tranNo,
 								Model model) throws Exception {
 		
@@ -86,7 +87,7 @@ public class PurchaseController {
 		return "forward:/purchase/getPurchase.jsp";
 	}
 	
-	@RequestMapping("/listPurchase.do")
+	@RequestMapping("listPurchase")
 	public String listPurchase(@ModelAttribute("search") Search search,
 								HttpSession session,
 								Model model) throws Exception {
@@ -117,7 +118,7 @@ public class PurchaseController {
 		return "forward:/purchase/listPurchase.jsp";
 	}
 	
-	@RequestMapping("/updatePurchaseView.do")
+	@RequestMapping("updatePurchaseView")
 	public String updatePurchaseView(@RequestParam("tranNo") int tranNo,
 										Model	model) throws Exception {
 		model.addAttribute("purchase",purchaseService.getPurchase(tranNo));
@@ -125,7 +126,7 @@ public class PurchaseController {
 		return "forward:/purchase/updatePurchaseView.jsp";
 	}
 	
-	@RequestMapping("/updatePurchase.do")
+	@RequestMapping("updatePurchase")
 	public String updatePurchase(@ModelAttribute("purchase") Purchase purchase) throws Exception {
 
 		purchase.setPurchaseProd(purchaseService.getPurchase(purchase.getTranNo()).getPurchaseProd());
@@ -136,7 +137,7 @@ public class PurchaseController {
 		return "forward:/purchase/getPurchase.jsp?prodNo="+purchase.getPurchaseProd().getProdNo();
 	}
 	
-	@RequestMapping("/updateTranCode.do")
+	@RequestMapping("updateTranCode")
 	public String updateTranCode(@ModelAttribute("purchase") Purchase purchase,
 									@RequestParam("tranNo") int tranNo,
 									@RequestParam("tranCode") String tranCode) throws Exception {
@@ -144,10 +145,10 @@ public class PurchaseController {
 		purchase.setTranCode(tranCode);
 		purchaseService.updateTranCode(purchase);
 
-		return "forward:/listPurchase.do";
+		return "forward:/purchase/listPurchase";
 	}
 	
-	@RequestMapping("/updateTranCodeByProd.do")
+	@RequestMapping("updateTranCodeByProd")
 	public String updateTranCodeByProd(@ModelAttribute("purchase") Purchase purchase,
 										@RequestParam("prodNo") int prodNo,
 										@RequestParam("tranCode") String tranCode) throws Exception {
@@ -155,6 +156,6 @@ public class PurchaseController {
 		purchase.setTranCode(tranCode);
 		purchaseService.updateTranCode(purchase);
 		
-		return "forward:/listProduct.do?menu=manage";
+		return "forward:/product/listProduct?menu=manage";
 	}
 }

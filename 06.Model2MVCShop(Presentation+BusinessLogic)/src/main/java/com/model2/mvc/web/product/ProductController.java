@@ -23,6 +23,7 @@ import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.product.impl.ProductServiceImpl;
 
 @Controller
+@RequestMapping("/product/*")
 public class ProductController {
 
 	@Autowired
@@ -37,10 +38,9 @@ public class ProductController {
 		System.out.println(this.getClass());
 	}
 	
-	@RequestMapping("/addProduct.do")
+	@RequestMapping("addProduct")
 	public String addProduct(@ModelAttribute("product") Product product,
 								HttpServletRequest request) throws Exception{
-		System.out.println("/addProduct.do 입니다.");
 		
 		productService.addProduct(product);
 		
@@ -48,25 +48,22 @@ public class ProductController {
 		return "forward:/product/addProduct.jsp";
 	}
 	
-	@RequestMapping("/getProduct.do")
+	@RequestMapping("getProduct")
 	public String getProduct(@RequestParam("prodNo") int prodNo,
 							 @RequestParam("menu") String menu,
 							 Model model) throws Exception{
-		System.out.println("/getProduct.do 입니다.");
 		model.addAttribute("product",productService.getProduct(prodNo));
 		
 		if(menu.equals("manage")) {
-			return "forward:/updateProductView.do";
+			return "forward:/product/updateProductView.do";
 		}else {
 			return "forward:/product/getProduct.jsp";
 		}
 	}
 	
-	@RequestMapping("/listProduct.do")
+	@RequestMapping("listProduct")
 	public String listProduct(@ModelAttribute("search") Search search,
 								HttpServletRequest request) throws Exception{
-
-		System.out.println("/listProduct.do 입니다.");
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -99,19 +96,15 @@ public class ProductController {
 		return "forward:/product/listProduct.jsp";
 	}
 	
-	@RequestMapping("/updateProductView.do")
+	@RequestMapping("updateProductView")
 	public String updateProductView(@RequestParam("prodNo") int prodNo) throws Exception{
-		System.out.println("/updateProductView.do 입니다.");
 		productService.getProduct(prodNo);
 		
 		return "forward:/product/updateProductView.jsp";
 	}
 	
-	@RequestMapping("/updateProduct.do")
+	@RequestMapping("updateProduct")
 	public String updateProduct(@ModelAttribute("product") Product product) throws Exception{
-		System.out.println("/updateProduct.do 입니다.");
-		System.out.println("%%product ; "+product);
-		
 		productService.updateProduct(product);
 		
 		return "forward:/product/getProduct.jsp";

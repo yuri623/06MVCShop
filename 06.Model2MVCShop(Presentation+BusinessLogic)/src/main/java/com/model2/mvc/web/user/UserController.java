@@ -46,7 +46,7 @@ public class UserController {
 	int pageSize;
 	
 	
-	@RequestMapping("/addUserView")
+	@RequestMapping("addUserView")
 	public String addUserView() throws Exception {
 
 		System.out.println("/addUserView");
@@ -54,20 +54,20 @@ public class UserController {
 		return "redirect:/user/addUserView.jsp";
 	}
 	
-	@RequestMapping("/addUser")
+	@RequestMapping("addUser")
 	public String addUser( @ModelAttribute("user") User user ) throws Exception {
 
-		System.out.println("/addUser");
+		System.out.println("addUser");
 		//Business Logic
 		userService.addUser(user);
 		
 		return "redirect:/user/loginView.jsp";
 	}
 	
-	@RequestMapping("/getUser")
+	@RequestMapping("getUser")
 	public String getUser( @RequestParam("userId") String userId , Model model ) throws Exception {
 		
-		System.out.println("/getUser");
+		System.out.println("getUser");
 		//Business Logic
 		User user = userService.getUser(userId);
 		// Model 과 View 연결
@@ -76,10 +76,10 @@ public class UserController {
 		return "forward:/user/getUser.jsp";
 	}
 	
-	@RequestMapping("/updateUserView")
+	@RequestMapping("updateUserView")
 	public String updateUserView( @RequestParam("userId") String userId , Model model ) throws Exception{
 
-		System.out.println("/updateUserView");
+		System.out.println("updateUserView");
 		//Business Logic
 		User user = userService.getUser(userId);
 		// Model 과 View 연결
@@ -88,10 +88,10 @@ public class UserController {
 		return "forward:/user/updateUser.jsp";
 	}
 	
-	@RequestMapping("/updateUser")
+	@RequestMapping("updateUser")
 	public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session) throws Exception{
 
-		System.out.println("/updateUser");
+		System.out.println("updateUser");
 		//Business Logic
 		userService.updateUser(user);
 		
@@ -103,18 +103,18 @@ public class UserController {
 		return "redirect:/user/getUser?userId="+user.getUserId();
 	}
 	
-	@RequestMapping("/loginView")
+	@RequestMapping("loginView")
 	public String loginView() throws Exception{
 		
-		System.out.println("/loginView");
+		System.out.println("loginView");
 
 		return "redirect:/user/loginView.jsp";
 	}
 	
-	@RequestMapping("/login")
+	@RequestMapping("login")
 	public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
 		
-		System.out.println("/login");
+		System.out.println("login");
 		//Business Logic
 		User dbUser=userService.getUser(user.getUserId());
 		
@@ -125,20 +125,20 @@ public class UserController {
 		return "redirect:/index.jsp";
 	}
 	
-	@RequestMapping("/logout")
+	@RequestMapping("logout")
 	public String logout(HttpSession session ) throws Exception{
 		
-		System.out.println("/logout");
+		System.out.println("logout");
 		
 		session.invalidate();
 		
 		return "redirect:/index.jsp";
 	}
 	
-	@RequestMapping("/checkDuplication")
+	@RequestMapping("checkDuplication")
 	public String checkDuplication( @RequestParam("userId") String userId , Model model ) throws Exception{
 		
-		System.out.println("/checkDuplication");
+		System.out.println("checkDuplication");
 		//Business Logic
 		boolean result=userService.checkDuplication(userId);
 		// Model 과 View 연결
@@ -148,10 +148,10 @@ public class UserController {
 		return "forward:/user/checkDuplication.jsp";
 	}
 	
-	@RequestMapping("/listUser")
+	@RequestMapping("listUser")
 	public String listUser( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
-		System.out.println("/listUser");
+		System.out.println("listUser");
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
