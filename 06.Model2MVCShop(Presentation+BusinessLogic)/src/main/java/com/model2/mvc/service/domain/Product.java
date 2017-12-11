@@ -2,6 +2,8 @@ package com.model2.mvc.service.domain;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 
 public class Product {
 	
@@ -13,6 +15,7 @@ public class Product {
 	private int prodNo;
 	private Date regDate;
 	private String proTranCode;
+	private MultipartFile file;
 	
 	public Product(){
 	}
@@ -76,5 +79,14 @@ public class Product {
 		return "Product : [fileName]" + fileName
 				+ "[manuDate]" + manuDate+ "[price]" + price + "[prodDetail]" + prodDetail
 				+ "[prodName]" + prodName + "[prodNo]" + prodNo + "[proTranCode]" + proTranCode;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		setFileName(file.getOriginalFilename());
+		this.file = file;
 	}	
 }

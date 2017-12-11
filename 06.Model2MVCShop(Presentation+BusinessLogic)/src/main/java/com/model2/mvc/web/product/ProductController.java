@@ -1,11 +1,12 @@
 package com.model2.mvc.web.product;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,12 +16,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.model2.mvc.common.FileUploadUtil;
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.File;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.product.ProductService;
-import com.model2.mvc.service.product.impl.ProductServiceImpl;
 
 @Controller
 @RequestMapping("/product/*")
@@ -41,6 +45,35 @@ public class ProductController {
 	@RequestMapping("addProduct")
 	public String addProduct(@ModelAttribute("product") Product product,
 								HttpServletRequest request) throws Exception{
+		
+		/////////////////////////////////////////////////////////////////////
+		String realUploadPath = "C:\\Users\\bitcamp\\git\\06MVCShop\\06.Model2MVCShop(Presentation+BusinessLogic)\\WebContent\\images\\uploadFiles\\";
+		MultipartHttpServletRequest mpRequest = (MultipartHttpServletRequest)request;
+		Iterator fileNameIterator = mpRequest.getFileNames();
+		
+		List boardFileList = new ArrayList();
+		while(fileNameIterator.hasNext()) {
+			MultipartFile multiFile = mpRequest.getFile((String)fileNameIterator.next());
+			
+			if(multiFile.getSize() > 0 ) {
+				File file = FileUploadUtil.uploadFormFile(multiFile, realUploadPath);
+				boardFileList.add(file);
+				
+				multiFile.transferTo(new java.io.File(realUploadPath+file.getFileName()));
+				InputStream is = null;
+				
+				try {
+					is = multiFile.getInputStream() ;
+				}finally {
+					is.close();
+				}
+			}
+				
+		}
+		
+		//return boardFileList;
+		
+		/////////////////////////////////////////////////////////////////////
 		
 		productService.addProduct(product);
 		

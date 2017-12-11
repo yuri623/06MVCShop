@@ -46,7 +46,7 @@ function resetData(){
 </script>
 </head>
 
-<form name="detailForm" method="post">
+<form name="detailForm" method="post" enctype="multipart/form-data">
 
 <table width="100%" height="37" border="0" cellspacing="0" cellpadding="0">
 	<tr>
@@ -130,7 +130,7 @@ function resetData(){
 		<td width="104" class="ct_write">상품이미지</td>
 		<td width="1" bgcolor="#d6d6d6"></td>
 		<td class="ct_write01">
-			<input name="fileName" class="ct_input_g" style="width: 200px; height: 19px;" type="file" maxlength="13">
+			<input name="file" class="ct_input_g" style="width: 200px; height: 19px;" type="file" maxlength="13">
 		</td>
 	</tr>
 	<tr>
